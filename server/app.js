@@ -10,7 +10,6 @@ app.use(KoaParser());
 app.use(router.routes());
 
 router.get('/', (ctx) => {
-  console.log(ctx.query);
   ctx.body = {
     result: true
   }

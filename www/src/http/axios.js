@@ -18,6 +18,8 @@ const get = (opts) => {
   }).then(response => {
     if (response.status === 200) return response.data;
     return response;
+  }).catch(e => {
+    return e;
   });
 }
 
