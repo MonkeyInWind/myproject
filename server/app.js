@@ -9,10 +9,20 @@ app.use(cors());
 app.use(KoaParser());
 app.use(router.routes());
 
+const get = router.get;
+const post = router.post;
+
 router.get('/', (ctx) => {
   ctx.body = {
     result: true
   }
 });
+
+router.post('/', (ctx) => {
+    ctx.body = {
+        result: true,
+        data: ctx.request.body
+    }
+})
 
 app.listen('10086');

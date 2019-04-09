@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
-import { get, post } from './http/axios';
 import './App.css';
+import { getTest, postTest } from './http/server';
 
 class App extends Component {
   async componentDidMount() {
-    let res = await get({
-      url: 'http://192.168.20.41:10086',
-      data: {
-        a: 1,
-        b: 2
-      }
-    });
-
-    console.log(res);
+    let getRes = await getTest({a: 1});
+    let postRes = await postTest({a: 1});
+    console.log(getRes, postRes);
   }
   render() {
     return (

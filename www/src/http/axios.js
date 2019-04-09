@@ -29,7 +29,10 @@ const post = (opts) => {
     url: opts.url,
     data: opts.data
   }).then(response => {
-    console.log(response);
+    if (response.status === 200) return response.data;
+    return response;
+  }).catch(e => {
+      return e;
   });
 }
 
