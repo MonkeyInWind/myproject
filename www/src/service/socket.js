@@ -1,15 +1,34 @@
-import Settings from './../etc/settings';
 import socket from 'socket.io-client';
 
-const SocketUrl = Settings.socket_url;
+class Socket {
+    constructor(url, path) {
+        this.url = url;
+        this.path = path;
+        this.io = socket(`${url}/${path}`);
+    }
 
-const io = socket(`${SocketUrl}/test`);
+    connect = () => {
+        return new Promise((resolve, reject) => {
+            this.io.on('connect', () => {
+                console.log('websocket connected');
+                resolve({result: true});
+            });
+        });
+    }
 
-io.on('connect', () => {
-    console.log('connected');
-    io.emit('message', 'test');
-    io.on('res', res => {
-        console.log(res);
-        io.disconnect();
-    });
-});
+    emit = (key, mess) => {
+        this.io.emit(key, mess);
+    }
+
+    on = (key, callback) => {
+        this.io.on(key, res => {
+            callback && callback(res);
+        });
+    }
+
+    close = () => {
+        this.io.close();
+    }
+}
+
+export default Socket;

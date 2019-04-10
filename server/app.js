@@ -29,13 +29,14 @@ router.post('/', (ctx) => {
 
 const io = socket(server);
 
-io.of('/test').on('connect', (client) => {
+io.of('/test').on('connection', (client) => {
     console.log('connected');
 
     client.on('message', async function (message) {
         console.log(message);
 
-        client.emit('res', 'server received test message');
+        client.emit('res', {a: 2});
+        client.disconnect();
     });
 
     client.on('disconnect', async function () {

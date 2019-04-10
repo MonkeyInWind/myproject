@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getTest, postTest } from './service/server';
-import './service/socket';
+import Socket from './service/socket';
+import Settings from './etc/settings';
 
 class App extends Component {
     constructor(props) {
@@ -23,6 +24,20 @@ class App extends Component {
         let postRes = await postTest({a: 1});
         this.setState({
             postRes: JSON.stringify(postRes)
+        });
+    }
+
+    async componentDidMount() {
+        const ws = new Socket(Settings.socket_url, 'test');
+        let connectRes = await ws.connect();
+        ws.emit('message', {a: 1});
+
+        ws.on('disconnect', () => {
+            console.log('disconnect');
+        });
+
+        ws.on('res', (res) => {
+            console.log(res);
         });
     }
 
