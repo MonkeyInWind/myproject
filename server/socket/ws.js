@@ -1,8 +1,10 @@
 const test = (client) => {
     console.log('connected');
 
-    client.on('message', async function (message) {
-        console.log(message);
+    client.on('message', async function (message, cb) {
+        console.log(`received: ${JSON.stringify(message)}`);
+        cb && cb({result: true});
+
         let n = 0;
         this.timer = setInterval(() => {
             client.emit('res', n);

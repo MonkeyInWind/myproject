@@ -31,7 +31,9 @@ class App extends Component {
         const ws = new Socket(Settings.socket_url, 'test');
         let connectRes = await ws.connect();
         console.log(`websocket connect result: ${connectRes.result}`);
-        ws.emit('message', {a: 1});
+
+        let sendRes = await ws.emit('message', {a: 1});
+        console.log(`send message result: ${sendRes.result}`);
 
         ws.on('disconnect', () => {
             console.log('websocket disconnect');

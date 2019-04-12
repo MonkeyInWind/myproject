@@ -16,14 +16,16 @@ class Socket {
         });
     }
 
-    emit = (key, mess) => {
-        this.io.emit(key, mess);
+    emit = (key, values) => {
+        return new Promise((resolve, reject) => {
+            this.io.emit(key, values, (res) => {
+                resolve(res);
+            });
+        });
     }
 
-    on = (key, callback) => {
-        this.io.on(key, res => {
-            callback && callback(res);
-        });
+    on = (key, cb) => {
+        this.io.on(key, cb);
     }
 
     close = () => {
