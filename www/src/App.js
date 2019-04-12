@@ -30,14 +30,15 @@ class App extends Component {
     async componentDidMount() {
         const ws = new Socket(Settings.socket_url, 'test');
         let connectRes = await ws.connect();
+        console.log(`websocket connect result: ${connectRes.result}`);
         ws.emit('message', {a: 1});
 
         ws.on('disconnect', () => {
-            console.log('disconnect');
+            console.log('websocket disconnect');
         });
 
         ws.on('res', (res) => {
-            console.log(res);
+            console.log(`websocket received: ${res}`);
         });
     }
 
